@@ -1,4 +1,5 @@
 const express = require('express');
+const math = require('mathjs');
 const app = express();
 const port = 3000;
 // Define operator and operand mappings
@@ -105,11 +106,12 @@ app.get('/calculate/:expression*', (req, res) => {
     const parts = expression.split('/');
     console.log('parts', parts);
     const questionExpressionValue  = calcQuestionExpression(parts);
-    const calculatedExpresionValue = calcExpressionValue(parts);
+    console.log(math.evaluate(questionExpressionValue));
+    
 
     const jsonExpression = {
         question:questionExpressionValue ,
-        answer: calculatedExpresionValue
+        answer: math.evaluate(questionExpressionValue)
     }
     history.unshift(jsonExpression);
     if (history.length > 20) {
